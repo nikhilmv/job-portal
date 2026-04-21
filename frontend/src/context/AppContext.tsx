@@ -28,7 +28,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [applications, setApplications] = useState<Application[]>([]);
 
   async function fetchUser() {
-    console.log("fetchUser started, token:", Cookies.get("token") ? "Present" : "Missing");
+    console.log(
+      "fetchUser started, token:",
+      Cookies.get("token") ? "Present" : "Missing",
+    );
     try {
       const { data } = await axios.get(`${user_service}/api/user/me`, {
         headers: {
@@ -36,11 +39,17 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         },
       });
 
-      console.log("fetchUser success:", data.user ? data.user.name : "No user data");
+      console.log(
+        "fetchUser success:",
+        data.user ? data.user.name : "No user data",
+      );
       setUser(data.user);
       setIsAuth(true);
     } catch (error: any) {
-      console.error("fetchUser error:", error.response?.data?.message || error.message);
+      console.error(
+        "fetchUser error:",
+        error.response?.data?.message || error.message,
+      );
       setIsAuth(false);
     } finally {
       console.log("fetchUser finally: setting loading to false");
@@ -170,9 +179,31 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         },
       );
 
-      setApplications(data);
+      setApplications(data.applications || []);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function applyJob(job_id: number) {
+    setBtnLoading(true);
+    try {
+      const { data } = await axios.post(
+        `${user_service}/api/user/apply/job`,
+        { job_id },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        },
+      );
+
+      toast.success(data.message);
+      fetchApplications();
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    } finally {
+      setBtnLoading(false);
     }
   }
 
@@ -197,6 +228,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         updateUser,
         addSkill,
         removeSkill,
+        applyJob,
         applications,
         fetchApplications,
       }}

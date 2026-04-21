@@ -77,6 +77,7 @@ export interface AppContextType {
   removeSkill: (skillName: string) => Promise<void>;
   applications: Application[];
   fetchApplications: () => Promise<void>;
+  applyJob: (job_id: number) => Promise<void>;
 }
 
 export interface AppProviderProps {

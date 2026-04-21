@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -6,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Briefcase, Filter, MapPin, Search, X } from "lucide-react";
 import { Job } from "@/type";
 import Loading from "@/components/loading";
-// import JobCard from "@/components/job-card";
+import JobCard from "@/components/job-card";
 import {
   Dialog,
   DialogContent,
@@ -50,7 +51,7 @@ const JobsPage = () => {
         },
       );
 
-      setJobs(data);
+      setJobs(data.jobs);
     } catch (error) {
       console.log(error);
     } finally {
@@ -134,9 +135,9 @@ const JobsPage = () => {
             <>
               {jobs && jobs.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                  {/* {jobs.map((job) => (
+                  {jobs.map((job) => (
                     <JobCard job={job} key={job.job_id} />
-                  ))} */}
+                  ))}
                 </div>
               ) : (
                 <div className="text-center py-16">
