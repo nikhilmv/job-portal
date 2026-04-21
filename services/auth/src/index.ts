@@ -2,15 +2,14 @@ import app from "./app.js";
 import dotenv from "dotenv";
 // import { sql } from "./utils/db.js";
 import { pool } from "./utils/db.js";
+import { connectKafka } from "./producer.js";
 
 dotenv.config();
 
-
 async function initDb() {
-
-    console.log(`DATABASE URL :${process.env.DB_URL}`);
-    try {
-        await pool.query(`
+  console.log(`DATABASE URL :${process.env.DB_URL}`);
+  try {
+    await pool.query(`
             DO $$
             BEGIN
             IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
@@ -18,7 +17,7 @@ async function initDb() {
             END IF;
             END$$;
             `);
-        await pool.query(`
+    await pool.query(`
             CREATE TABLE IF NOT EXISTS users (
                 user_id SERIAL PRIMARY KEY,
                 email VARCHAR(255) NOT NULL UNIQUE,
@@ -38,7 +37,7 @@ async function initDb() {
             )
         `);
 
-        await pool.query(`
+    await pool.query(`
             CREATE TABLE IF NOT EXISTS skills (
                 skill_id SERIAL PRIMARY KEY,
                 name VARCHAR(255) NOT NULL UNIQUE,
@@ -47,23 +46,28 @@ async function initDb() {
             )
           `);
 
-        await pool.query(`
+    await pool.query(`
             CREATE TABLE IF NOT EXISTS user_skills (
                 user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
                 skill_id INTEGER NOT NULL REFERENCES skills(skill_id) ON DELETE CASCADE,
                 PRIMARY KEY (user_id, skill_id)
                 )
           `);
-        console.log("✅ Database tables checked/created successfully");
-    } catch (error) {
-        console.log("❌ Database tables check/creation failed", error);
-    }
+    console.log("✅ Database tables checked/created successfully");
+  } catch (error) {
+    console.log("❌ Database tables check/creation failed", error);
+  }
 }
 
-initDb().then(() => {
-    app.listen(process.env.PORT, () => {
-        console.log(`Auth service is running on http://localhost:${process.env.PORT}`);
+initDb()
+  .then(() => {
+    app.listen(process.env.PORT, async () => {
+      await connectKafka();
+      console.log(
+        `Auth service is running on http://localhost:${process.env.PORT}`,
+      );
     });
-}).catch((error) => {
+  })
+  .catch((error) => {
     console.log("❌ Database connection failed", error);
-});
+  });
