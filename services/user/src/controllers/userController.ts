@@ -435,12 +435,14 @@ export const getAllaplications = async (
       });
     }
 
-    const applications = await client.query(
-      `
-      SELECT * FROM applications WHERE applicant_id = $1
-     `,
+    const applications = await pool.query(
+      `SELECT app.*, j.salary AS job_salary, j.title AS job_title, j.location AS job_location
+     FROM applications app
+     JOIN jobs j ON app.job_id = j.job_id
+     WHERE app.applicant_id = $1`,
       [user.user_id],
     );
+
     return res.status(200).json({
       message: "Applications fetched successfully",
       applications: applications.rows,

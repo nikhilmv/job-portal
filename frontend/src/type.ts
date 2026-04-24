@@ -58,7 +58,7 @@ export interface User {
   profile_pic: string | null;
   profile_pic_public_id: string | null;
   skills: string[];
-  subscription: string | null;
+  subscription_end_date: string | null;
 }
 
 export interface AppContextType {

@@ -17,6 +17,7 @@ export const utils_service = "http://localhost:5001";
 export const auth_service = "http://localhost:5000";
 export const user_service = "http://localhost:5002";
 export const job_service = "http://localhost:5003";
+export const payment_service = "http://localhost:5004";
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -28,10 +29,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [applications, setApplications] = useState<Application[]>([]);
 
   async function fetchUser() {
-    console.log(
-      "fetchUser started, token:",
-      Cookies.get("token") ? "Present" : "Missing",
-    );
     try {
       const { data } = await axios.get(`${user_service}/api/user/me`, {
         headers: {
@@ -39,20 +36,11 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         },
       });
 
-      console.log(
-        "fetchUser success:",
-        data.user ? data.user.name : "No user data",
-      );
       setUser(data.user);
       setIsAuth(true);
     } catch (error: any) {
-      console.error(
-        "fetchUser error:",
-        error.response?.data?.message || error.message,
-      );
       setIsAuth(false);
     } finally {
-      console.log("fetchUser finally: setting loading to false");
       setLoading(false);
     }
   }

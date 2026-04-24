@@ -251,7 +251,7 @@ const Info = ({
                   </h2>
 
                   <div className="p-6 rounded-lg bg-linear-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 to-purple-950/20 ">
-                    {!user.subscription ? (
+                    {!user.subscription_end_date ? (
                       <>
                         <div className="flex items-center justify-between flex-wrap gap-4">
                           <div>
@@ -271,7 +271,8 @@ const Info = ({
                           </Button>
                         </div>
                       </>
-                    ) : new Date(user.subscription).getTime() > Date.now() ? (
+                    ) : new Date(user.subscription_end_date).getTime() >
+                      Date.now() ? (
                       <div className="flex items-center justify-between flex-wrap gap-4">
                         <div>
                           <div className="flex items-center gap-2 mb-2">
@@ -285,14 +286,13 @@ const Info = ({
                           </div>
                           <p className="text-sm opacity-70">
                             Valid until:{" "}
-                            {new Date(user.subscription).toLocaleDateString(
-                              "en-US",
-                              {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              },
-                            )}
+                            {new Date(
+                              user.subscription_end_date,
+                            ).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })}
                           </p>
                         </div>
                         <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-700 text-white font-medium">
@@ -316,14 +316,13 @@ const Info = ({
 
                             <p className="text-sm opacity-70">
                               Expired On:{" "}
-                              {new Date(user.subscription).toLocaleDateString(
-                                "en-US",
-                                {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                                },
-                              )}
+                              {new Date(
+                                user.subscription_end_date,
+                              ).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })}
                             </p>
                           </div>
 

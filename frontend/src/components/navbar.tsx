@@ -15,6 +15,12 @@ function NavBar() {
   const { isAuth, user, setIsAuth, setUser, loading, logoutUser } =
     userAppData();
 
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -28,10 +34,7 @@ function NavBar() {
           <div className="flex items-center">
             <Link href={"/"} className="flex items-center gap-1 group">
               <div className="text-2xl font-bold tracking-tight">
-                <span className="bg-linear-to-r from bg-blue-600 to-blue-800 bg-clip-text text-transparent">
-                  job
-                </span>
-                <span className="text-red-500">portal</span>
+                <span className="bg-linear-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">job</span><span className="text-red-500">portal</span>
               </div>
             </Link>
           </div>
@@ -68,7 +71,7 @@ function NavBar() {
 
           {/* Right side Actions */}
           <div className="hidden md:flex items-center gap-3">
-            {loading ? (
+            {!mounted || loading ? (
               ""
             ) : (
               <>
@@ -125,12 +128,12 @@ function NavBar() {
                 )}
               </>
             )}
-            <ModeToggle />
+            {mounted && <ModeToggle />}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-3">
-            <ModeToggle />
+            {mounted && <ModeToggle />}
 
             <button
               onClick={toggleMenu}
@@ -179,33 +182,37 @@ function NavBar() {
             </Button>
           </Link>
 
-          {isAuth ? (
+          {mounted && (
             <>
-              <Link href={"/account"} onClick={toggleMenu}>
-                <Button
-                  variant={"ghost"}
-                  className="w-full justify-start gap-3 h-11"
-                >
-                  <User size={18} /> My Profile
-                </Button>
-              </Link>
-              <Button
-                variant={"destructive"}
-                className="w-full justify-start gap-3 h-11"
-                onClick={() => {
-                  logoutHandler();
-                  toggleMenu();
-                }}
-              >
-                <LogOut size={18} /> Logout
-              </Button>
+              {isAuth ? (
+                <>
+                  <Link href={"/account"} onClick={toggleMenu}>
+                    <Button
+                      variant={"ghost"}
+                      className="w-full justify-start gap-3 h-11"
+                    >
+                      <User size={18} /> My Profile
+                    </Button>
+                  </Link>
+                  <Button
+                    variant={"destructive"}
+                    className="w-full justify-start gap-3 h-11"
+                    onClick={() => {
+                      logoutHandler();
+                      toggleMenu();
+                    }}
+                  >
+                    <LogOut size={18} /> Logout
+                  </Button>
+                </>
+              ) : (
+                <Link href={"/login"} onClick={toggleMenu}>
+                  <Button className="w-full justify-start gap-3 h-11 mt-2">
+                    <User size={18} /> SignIn
+                  </Button>
+                </Link>
+              )}
             </>
-          ) : (
-            <Link href={"/login"} onClick={toggleMenu}>
-              <Button className="w-full justify-start gap-3 h-11 mt-2">
-                <User size={18} /> SignIn
-              </Button>
-            </Link>
           )}
         </div>
       </div>

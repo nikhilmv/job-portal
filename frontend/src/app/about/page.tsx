@@ -28,7 +28,7 @@ function About() {
               className="text-lg md:text-xl leading-relaxed opacity-90 max-w-3xl mx
 auto"
             >
-              At HireHaven, we're dedicated to revolutionizing the job search
+              At job portal, we're dedicated to revolutionizing the job search
               experience. Our mission is to create meaningful connections
               between talented individuals and forward-thinking companies,
               fostering growth and success for both.
