@@ -340,8 +340,14 @@ export const getSingleJob = async (
   res: Response,
   next: NextFunction,
 ) => {
+  const jobId = req.params.jobId;
+
   const job = await pool.query(
-    `SELECT * FROM jobs WHERE job_id = ${req.params.jobId}`,
+    `SELECT j.*, c.name AS company_name
+     FROM jobs j
+     JOIN companies c ON j.company_id = c.company_id
+     WHERE j.job_id = $1`,
+    [jobId],
   );
 
   return res.status(200).json({

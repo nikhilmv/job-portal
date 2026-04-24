@@ -257,7 +257,7 @@ const Hero = () => {
             {/* Center badge */}
             <div className="relative z-10 flex flex-col items-center gap-2 p-5 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-md text-center">
               <Sparkles size={28} className="text-indigo-400" />
-              <p className="text-white font-bold text-lg">HireHeaven</p>
+              <p className="text-white font-bold text-lg">job portal</p>
               <p className="text-indigo-300 text-xs">AI-Powered Hiring</p>
             </div>
           </div>

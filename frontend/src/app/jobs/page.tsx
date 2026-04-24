@@ -29,11 +29,15 @@ const locations = [
   "Chennai",
   "Remote",
 ];
+import { useSearchParams } from "next/navigation";
 
 const JobsPage = () => {
+  const searchParams = useSearchParams();
+  const q = searchParams.get("q");
+
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(q || "");
   const [location, setLocation] = useState("");
 
   const token = Cookies.get("token");

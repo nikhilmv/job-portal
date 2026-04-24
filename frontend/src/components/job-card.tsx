@@ -18,7 +18,7 @@ interface JobCardProps {
   job: Job;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const JobCard = ({ job }: JobCardProps) => {
   const { user, btnLoading, applyJob, applications } = userAppData();
 
   const applyJobHandler = (id: number) => {
@@ -34,7 +34,6 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       });
     }
   }, [applications, job.job_id]);
-
 
   return (
     <Card className="w-full max-w-[380px] hover:shadow-lg transition-all duration-300 border-2 hover:border-blue-500 group">

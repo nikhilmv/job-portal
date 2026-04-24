@@ -13,15 +13,15 @@ function About() {
             <img
               src="/about.jpg"
               className="w-full max-w-[500px] rounded-2xl shadow-lg"
-              alt="About HireHeaven"
+              alt="About job portal"
             />
           </div>
 
           {/* Content */}
           <div className="text-center space-y-6">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-              Our Mission At Hire
-              <span className="text-red-500">Heaven</span>
+              Our Mission At job
+              <span className="text-red-500">portal</span>
             </h1>
 
             <p
@@ -45,7 +45,7 @@ auto"
               Ready to find your dream job?
             </h2>
             <p className="text-lg md:text-xl opacity-80">
-              Join thousands of successful job seekers on HireHeaven
+              Join thousands of successful job seekers on job portal
             </p>
             <div className="pt-4">
               <Link href="/jobs">

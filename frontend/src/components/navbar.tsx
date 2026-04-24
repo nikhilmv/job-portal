@@ -29,9 +29,9 @@ function NavBar() {
             <Link href={"/"} className="flex items-center gap-1 group">
               <div className="text-2xl font-bold tracking-tight">
                 <span className="bg-linear-to-r from bg-blue-600 to-blue-800 bg-clip-text text-transparent">
-                  Hire
+                  job
                 </span>
-                <span className="text-red-500">Heaven</span>
+                <span className="text-red-500">portal</span>
               </div>
             </Link>
           </div>

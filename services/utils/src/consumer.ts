@@ -37,7 +37,7 @@ export const startSendMailConsumer = async () => {
           });
 
           await transporter.sendMail({
-            from: `Hireheaven <${process.env.SMTP_USER}>`,
+            from: `job portal <${process.env.SMTP_USER}>`,
             to,
 
             subject,
